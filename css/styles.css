@@ -1,7 +1,6 @@
 .library {
-    margin: 0 10%;
-    width: auto;
-    min-width: 800px;
+    margin-left: 200px;
+    width: 800px;
     display: flex;
     flex: auto;
     flex-wrap: wrap;
@@ -27,7 +26,6 @@ h2 {
 
 .book span {
     margin: 7px;
-    
 }
 
 .title {
@@ -37,4 +35,43 @@ h2 {
 
 .author {
     font-style: italic;
+}
+
+.new-book {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 200px;
+    margin: 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add-book {
+    width: 30px;
+    border: solid;
+    padding: 10px;
+    border-radius: 50%;
+    border-color: black;
+}
+
+#book-info {
+    width: 230px;
+}
+
+#book-info fieldset {
+    background-color: yellowgreen;
+}
+
+#book-info legend {
+    background-color: orange;
+}
+
+#book-info input {
+    margin: 5px;
+}
+
+.hidden {
+    visibility: hidden;
 }
