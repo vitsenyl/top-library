@@ -9,6 +9,19 @@ document.querySelector('#submit').onclick = addBookToLibrary;
 document.querySelector('#cancel').onclick = cancelAdd;
 addBookButton.onclick = displayAddBookForm;
 
+document.onclick = removeBookEvent;
+
+function removeBookEvent(e) {
+    if (e.target.classList.contains("remove-book")) {
+        let target = e.target.parentElement;
+
+        myLibrary.splice( myLibrary.findIndex(element => 
+            element.title == target.childNodes[0].innerText), 1);
+        
+        target.remove();
+    }
+}
+
 function displayAddBookForm() {
     if (newBookForm.classList.contains("hidden")) {
        newBookForm.classList.remove("hidden");
@@ -16,7 +29,6 @@ function displayAddBookForm() {
     } else {
         newBookForm.classList.add("hidden");
     }
-    console.log('yes');
 }
 
 function cancelAdd() {
@@ -65,14 +77,13 @@ function render() {
 function displayBook(book) {
     let bookDiv = document.createElement("div");
     bookDiv.setAttribute('class', 'book');
-    bookDiv.innerHTML = `<span class='title'>${book.title}</span>
-            <span class='author'>${book.author}</span>
-            <span class='pages'>${book.pages} pages</span>
+    bookDiv.innerHTML = `<span class="title">${book.title}</span>
+            <span class="author">${book.author}</span>
+            <span class="pages">${book.pages} pages</span>
             <select name="read-status" id="read-status">
                 ${readSelectorOptions(book.read)}
             </select>
-            <div class='remove-book'></div>
-            <div class='mark-read'></div>`;
+            <img class="remove-book" src="img/criss-cross.svg" alt="Remove Book">`;
     
     libraryShelf.appendChild(bookDiv);
 }
