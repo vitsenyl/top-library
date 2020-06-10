@@ -11,13 +11,17 @@
 </head>
 
 <body> 
-    <div class="library"></div>
+    <div class="library">
+      <h2>Library</h2>
+    </div>
     <div class="new-book">
         <form id="book-info">
-            Title: <input type="text" name="title">
-            Author: <input type="text" name="author">
-            # of Pages: <input type="number" name="pagecount">
-            Read?: <input type="checkbox" name="isread">
+            Title: <input type="text" name="book-title" id="book-title">
+            Author: <input type="text" name="book-author" id="book-author">
+            # of Pages: <input type="number" name="book-pages" id="book-pages">
+            Read?: <input type="checkbox" name="book-read" id="book-read">
+            <input type="button" name="Submit" value="Add New Book">
+            <input type="button" name="Cancel" value="Cancel">
         </form>
     </div>
   <script src="js/book.js"></script>
