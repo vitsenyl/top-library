@@ -28,6 +28,10 @@ h2 {
     margin: 7px;
 }
 
+.book:hover {
+    box-shadow: inset 0 0 6px;
+}
+
 .title {
     font-size: 1.1em;
     font-weight: 600;
@@ -37,12 +41,18 @@ h2 {
     font-style: italic;
 }
 
+.read {
+    padding: 3px;
+    border-style: solid;
+    border-color: green;
+    border-width: 1px;
+}
+
 .new-book {
     position: fixed;
     top: 20px;
     left: 20px;
     width: 200px;
-    margin: 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,6 +80,10 @@ h2 {
 
 #book-info input {
     margin: 5px;
+}
+
+select {
+    margin: 7px;
 }
 
 .hidden {
