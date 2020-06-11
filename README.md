@@ -5,8 +5,8 @@ Library App for The Odin Project. Made with vanilla JS, HTML and CSS.
 See the live version: https://vitsenyl.github.io/top-library/
 
 ## ToDo
-[ ] Add local storage and/or Firebase storage
-[ ] Actually prettify the UI
+- [ ] Add local storage and/or Firebase storage
+- [ ] Actually prettify the UI
 
 ## Discussion behind the Design
 If you have any comments or recommendations, I'd love to hear them!
@@ -16,6 +16,13 @@ If you have any comments or recommendations, I'd love to hear them!
 
 ## Lessons Learned
 
-* Can use element:hover newelement { } to modify the appearance (including visibility) of child elements when hovering over a parent element.
-* <Select> creates combo-boxes in HTML
+* Can use element:hover childelement { } to modify the appearance (including visibility) of child elements when hovering over a parent element.
+* Using the Select tag creates combo-boxes in HTML 
+  ```HTML
+   <select name="read-status" id="read-status">
+      <option value="Read">Read</option>
+      <option value="Reading">Reading</option>
+      <option value="Not Read">Not Read</option>
+    </select>
+  ```
 * Using .prototype.function.call() allowed me to call functions on similar objects that don't directly inherit from a parent (e.g. Array functions on NodeLists)
