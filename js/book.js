@@ -8,13 +8,25 @@ initializeLibrary();
 document.querySelector('#submit').onclick = addBookToLibrary;
 document.querySelector('#cancel').onclick = cancelAdd;
 addBookButton.onclick = displayAddBookForm;
+libraryShelf.onclick = removeBook;
+libraryShelf.onchange = editReadStatus;
 
-document.onclick = removeBookEvent;
+// Callback Functions
 
-function removeBookEvent(e) {
+function editReadStatus(e) {
+    if (e.target.classList.contains("read-status")) {
+        let target = e.target.parentElement;
+        let nodes = target.parentElement.childNodes;
+        let index = Array.prototype.indexOf.call(nodes, target) - 1;
+
+        myLibrary[index].updateReadStatus(e.target.value);
+    };
+}
+
+function removeBook(e) {
     if (e.target.classList.contains("remove-book")) {
         let target = e.target.parentElement;
-
+ 
         myLibrary.splice( myLibrary.findIndex(element => 
             element.title == target.childNodes[0].innerText), 1);
         
@@ -35,26 +47,6 @@ function cancelAdd() {
     displayAddBookForm();
 }
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-// Book.prototype.info = function() {
-//     return `${title} by ${author}, ${pages} pages, ${read ? "read" : "not read yet"}`;
-// }
-
-function initializeLibrary() {
-    let a = new Book("Divided", "Brian Cornell", 326, "Reading");
-    let b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
-    let c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
-    let d = new Book("The Pursuit of Endurance: Harnessing the Record-Breaking Power of Strength and Resilience", "Jennifer Pharr Davis", 320, "Not Read");
-    myLibrary.push(a,b,c,d);
-    render();
-}
-
 function addBookToLibrary() {
     let title = document.querySelector('#book-info #book-title').value;
     let author = document.querySelector('#book-info #book-author').value;
@@ -69,6 +61,23 @@ function addBookToLibrary() {
     }
 }
 
+// Utility Functions 
+
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+
+    this.info = function() {
+        return `${title} by ${author}, ${pages} pages, ${read ? "read" : "not read yet"}`;
+    }
+
+    this.updateReadStatus = function(readStatus) {
+        this.read = readStatus;
+    }
+}
+
 function render() {
     libraryShelf.innerHTML = "<h2>Library</h2>";
     myLibrary.forEach(displayBook);
@@ -80,7 +89,7 @@ function displayBook(book) {
     bookDiv.innerHTML = `<span class="title">${book.title}</span>
             <span class="author">${book.author}</span>
             <span class="pages">${book.pages} pages</span>
-            <select name="read-status" id="read-status">
+            <select name="read-status" class="read-status">
                 ${readSelectorOptions(book.read)}
             </select>
             <img class="remove-book" src="img/criss-cross.svg" alt="Remove Book">`;
@@ -96,4 +105,13 @@ function readSelectorOptions(readStatus) {
         readSelectorString += `>${s}</option><br>`;
     }
     return readSelectorString;
+}
+
+function initializeLibrary() {
+    let a = new Book("Divided", "Brian Cornell", 326, "Reading");
+    let b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
+    let c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
+    let d = new Book("The Pursuit of Endurance: Harnessing the Record-Breaking Power of Strength and Resilience", "Jennifer Pharr Davis", 320, "Not Read");
+    myLibrary.push(a,b,c,d);
+    render();
 }
