@@ -1,15 +1,23 @@
 const libraryShelf = document.querySelector('.library');
 const newBookForm = document.querySelector('#book-info');
-const addBookButton = document.querySelector('#add-book');
 
 let myLibrary = []; // Should use hash table ideally... will learn at some point!
 initializeLibrary();
 
-document.querySelector('#submit').onclick = addBookToLibrary;
-document.querySelector('#cancel').onclick = cancelAdd;
-addBookButton.onclick = displayAddBookForm;
-libraryShelf.onclick = removeBook;
-libraryShelf.onchange = editReadStatus;
+function initializeLibrary() {
+    document.querySelector('#submit').onclick = addBookToLibrary;
+    document.querySelector('#cancel').onclick = cancelAdd;
+    document.querySelector('#add-book').onclick = displayAddBookForm;
+    libraryShelf.onclick = removeBook;
+    libraryShelf.onchange = editReadStatus;
+
+    let a = new Book("Divided", "Brian Cornell", 326, "Reading");
+    let b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
+    let c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
+    let d = new Book("The Pursuit of Endurance: Harnessing the Record-Breaking Power of Strength and Resilience", "Jennifer Pharr Davis", 320, "Not Read");
+    myLibrary.push(a,b,c,d);
+    render();
+}
 
 // Callback Functions
 
@@ -105,13 +113,4 @@ function readSelectorOptions(readStatus) {
         readSelectorString += `>${s}</option><br>`;
     }
     return readSelectorString;
-}
-
-function initializeLibrary() {
-    let a = new Book("Divided", "Brian Cornell", 326, "Reading");
-    let b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
-    let c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
-    let d = new Book("The Pursuit of Endurance: Harnessing the Record-Breaking Power of Strength and Resilience", "Jennifer Pharr Davis", 320, "Not Read");
-    myLibrary.push(a,b,c,d);
-    render();
 }
