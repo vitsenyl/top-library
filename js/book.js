@@ -1,6 +1,23 @@
 const libraryShelf = document.querySelector('.library');
 const newBookForm = document.querySelector('#book-info');
 
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    info() {
+        return `${title} by ${author}, ${pages} pages, ${read ? "read" : "not read yet"}`;
+    }
+
+    updateReadStatus(readStatus) {
+        this.read = readStatus;
+    }
+}
+
 let myLibrary = []; // Should use hash table ideally... will learn at some point!
 initializeLibrary();
 
@@ -11,11 +28,15 @@ function initializeLibrary() {
     libraryShelf.onclick = removeBook;
     libraryShelf.onchange = editReadStatus;
 
-    let a = new Book("Divided", "Brian Cornell", 326, "Reading");
-    let b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
-    let c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
-    let d = new Book("The Pursuit of Endurance: Harnessing the Record-Breaking Power of Strength and Resilience", "Jennifer Pharr Davis", 320, "Not Read");
+    if (localStorage['myLibrary'] == '[]') {
+    const a = new Book("Divided", "Brian Cornell", 326, "Reading");
+    const b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
+    const c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
+    const d = new Book("The Pursuit of Endurance: Harnessing the Record-Breaking Power of Strength and Resilience", "Jennifer Pharr Davis", 320, "Not Read");
     myLibrary.push(a,b,c,d);
+    } else {
+        myLibrary = JSON.parse(localStorage['myLibrary']).map(toBook);
+    }
     render();
 }
 
@@ -28,17 +49,18 @@ function editReadStatus(e) {
         let index = Array.prototype.indexOf.call(nodes, target) - 1;
 
         myLibrary[index].updateReadStatus(e.target.value);
+        updateLibraryStorage();
     };
 }
 
 function removeBook(e) {
     if (e.target.classList.contains("remove-book")) {
         let target = e.target.parentElement;
- 
-        myLibrary.splice( myLibrary.findIndex(element => 
-            element.title == target.childNodes[0].innerText), 1);
+        let index = myLibrary.findIndex(element => element.title == target.childNodes[0].innerText);
         
+        myLibrary.splice(index, 1);
         target.remove();
+        updateLibraryStorage();
     }
 }
 
@@ -71,24 +93,10 @@ function addBookToLibrary() {
 
 // Utility Functions 
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
-    this.info = function() {
-        return `${title} by ${author}, ${pages} pages, ${read ? "read" : "not read yet"}`;
-    }
-
-    this.updateReadStatus = function(readStatus) {
-        this.read = readStatus;
-    }
-}
-
 function render() {
     libraryShelf.innerHTML = "<h2>Library</h2>";
     myLibrary.forEach(displayBook);
+    updateLibraryStorage();
 }
 
 function displayBook(book) {
@@ -113,4 +121,13 @@ function readSelectorOptions(readStatus) {
         readSelectorString += `>${s}</option><br>`;
     }
     return readSelectorString;
+}
+
+function updateLibraryStorage() {
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
+
+function toBook(value) {
+    const book = new Book();
+    return Object.assign(book, value);
 }
