@@ -28,7 +28,7 @@ function initializeLibrary() {
     libraryShelf.onclick = removeBook;
     libraryShelf.onchange = editReadStatus;
 
-    if (localStorage['myLibrary'] == '[]') {
+    if (localStorage['myLibrary'] == '[]' || localStorage.length == 0) {
     const a = new Book("Divided", "Brian Cornell", 326, "Reading");
     const b = new Book("Thirst: 2600 Miles to Home", "Heather Anderson,", 208, "Read");
     const c = new Book("Free Outside: A Trek Against Time and Distance", "Jeff Garmire", 264, "Read");
